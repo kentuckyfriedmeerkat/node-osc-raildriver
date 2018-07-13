@@ -1,6 +1,7 @@
-let http = require("http");
-let osc = require("osc");
-let fs = require("fs");
+let http = require('http');
+let osc = require('osc');
+let fs = require('fs');
+let numeral = require('numeral');
 let RailDriver = require('./raildriver');
 
 let cmap = JSON.parse(fs.readFileSync(process.argv[2]));
@@ -9,6 +10,8 @@ let config = JSON.parse(fs.readFileSync('config.json'));
 let rd = new RailDriver(config.dll);
 
 let oscPort = new osc.UDPPort(config.port);
+
+const updateInterval = 50;
 
 oscPort.open();
 
@@ -40,7 +43,7 @@ oscPort.on('ready', () => {
             let rval = rd.GetControllerValue(c);
             if (!previousVal[c] || previousVal[c] != rval) previousVal[c] = rval;
             else if (previousVal[c] == rval) continue;
-            let cval = cmap[c] == 0? rval : Math.round(rval * cmap[c]) / cmap[c];
+            let cval = cmap[c] === 0? rval : numeral(rval).format(cmap[c]);
             oscPort.send({
                 address: `/control/${c}`,
                 args: [{
@@ -49,7 +52,7 @@ oscPort.on('ready', () => {
                 }]
             })
         }
-    }, 100);
+    }, updateInterval);
 
     oscPort.on('message', msg => {
         let ada = msg.address.substring(1).split('/');

@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "ffi": "^2.2.0",
+    "numeral": "^2.0.6",
     "osc": "^2.2.3"
   }
 }

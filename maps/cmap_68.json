@@ -1,0 +1,17 @@
+{
+    "SpeedometerMPH": "0",
+    "ThrottleAndBrake": 0,
+    "DRAButton": 0,
+    "AWS": 0,
+    "tpws_aws_flash": 0,
+    "tpws_spad_flash": 0,
+    "tpws_overspeed_flash": 0,
+    "CabEQNeedle": "0.0",
+    "LocoBrakeCylinderDisplayed": "0.0",
+    "AWSIsolation": 0,
+    "HazardLightsRelay": 0,
+    "Wheelslip": 0,
+    "Ammeter": "0",
+    "VirtualRPM": "0",
+    "TractiveEffort": "0" 
+}

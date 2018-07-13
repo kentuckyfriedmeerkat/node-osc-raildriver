@@ -1,0 +1,15 @@
+{
+    "VirtualRPM": "0",
+    "Ammeter": "0",
+    "Wipers": 0,
+    "Wipers2": 0,
+    "CabEQNeedle": "0.0",
+    "PassGoods": "0",
+    "VirtualThrottle": 0,
+    "EmergencyPlunger": 0,
+    "BrakeCylinder1Bars": "0.0",
+    "SpeedometerMPH": "0",
+    "AWS": 0,
+    "ReverserIn": 0,
+    "BrakePipePressureBAR": "0.0"
+}

@@ -29,6 +29,7 @@ module.exports = class RailDriver {
         this._lib.SetRailSimConnected(true);
         this._lib.SetRailDriverConnected(true);
         this._connected = true;
+        this.UpdateControllerList();
     }
 
     Disconnect() {
@@ -60,6 +61,18 @@ module.exports = class RailDriver {
         if (!this._connected) return;
         if (!this._controllers[controllerName]) return;
         return this._lib.GetControllerValue(this._controllers[controllerName], 0);
+    }
+
+    GetControllerMin(controllerName) {
+        if (!this._connected) return;
+        if (!this._controllers[controllerName]) return;
+        return this._lib.GetControllerValue(this._controllers[controllerName], 1);
+    }
+
+    GetControllerMax(controllerName) {
+        if (!this._connected) return;
+        if (!this._controllers[controllerName]) return;
+        return this._lib.GetControllerValue(this._controllers[controllerName], 2);
     }
 
     SetControllerValue(controllerName, value) {
