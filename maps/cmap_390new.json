@@ -1,5 +1,5 @@
 {
-    "SpeedometerMPH": 1,
+    "SpeedometerMPH": "0.0",
     "DRA": 0,
     "SpeedSet": 0,
     "EmergencyBrakePlunger": 0,
@@ -25,8 +25,8 @@
     "TailLight": 0,
     "TailLightRemote": 0,
     "PantographControl": 0,
-    "SpeedSetVelocity": 1,
-    "gnElectricBrakeForce": 10,
+    "SpeedSetVelocity": "0.0",
+    "gnElectricBrakeForce": "0.00",
     "PoweredAxleNeedle": 0,
     "HandBrake": 0,
     "MasterKey": 0
