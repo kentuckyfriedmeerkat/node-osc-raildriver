@@ -1,0 +1,10 @@
+{
+  "name": "osc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "ffi": "^2.2.0",
+    "osc": "^2.2.3"
+  }
+}
