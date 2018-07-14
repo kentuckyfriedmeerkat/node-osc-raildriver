@@ -24,6 +24,18 @@ module.exports = class RailDriver {
                 this.Model = model;
             }
         };
+
+        this.VirtualController = {
+            Latitude: 400,
+            Longitude: 401,
+            FuelLevel: 402,
+            InTunnel: 403,
+            Gradient: 404,
+            Heading: 405,
+            TimeHours: 406,
+            TimeMins: 407,
+            TimeSecs: 408
+        }
     }
 
     Connect() {
