@@ -1,7 +1,6 @@
 let OSC = require('osc');
 let Vorpal = require('vorpal')();
 let _ = require('lodash');
-let Path = require('path-parser').default;
 
 let osc = {};
 let portOpen = false;
@@ -21,21 +20,6 @@ let oscMessageReceived = msg => {
     console.log(`Message received: ${JSON.stringify(msg)}`);
     Vorpal.ui.redraw.done();
 };
-
-let argPathParser = new Path(':format/:value');
-
-let parseArgs = args => {
-    let temp = [];
-    for (let arg of args) {
-        let parse = argPathParser.test(arg);
-        if (!parse) return null;
-        temp.push({
-            type: parse.format,
-            value: type.val
-        });
-    }
-    return temp;
-}
 
 Vorpal.command('open', 'Open the OSC port')
     .action((args, callback) => {
