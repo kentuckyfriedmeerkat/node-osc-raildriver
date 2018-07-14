@@ -3,6 +3,7 @@ let ref = require('ref');
 
 module.exports = class RailDriver {
     constructor(dll) {
+        console.log(`Connecting to DLL at ${dll}...`);
         this._lib = ffi.Library(dll, {
             SetRailSimConnected: ['void', ['bool']],
             SetRailDriverConnected: ['void', ['bool']],
@@ -26,13 +27,18 @@ module.exports = class RailDriver {
     }
 
     Connect() {
+        if (this._connected) return;
+        console.log('Connecting RailDriver interface...');
         this._lib.SetRailSimConnected(true);
         this._lib.SetRailDriverConnected(true);
         this._connected = true;
         this.UpdateControllerList();
+        this.uclInterval = setInterval(this.UpdateControllerList, 2000);
     }
 
     Disconnect() {
+        if (!this._connected) return;
+        clearTimeout(this.uclInterval);
         this._lib.SetRailDriverConnected(false);
         this._lib.SetRailSimConnected(false);
         this._connected = false;
@@ -47,11 +53,13 @@ module.exports = class RailDriver {
 
     get HasLocoChanged() {
         if (!this._connected) return false;
+        console.log(`Loco changed!`);
         return this._lastLoco != this._lib.GetLocoName();
     }
 
     UpdateControllerList() {
         if (!this._connected) return;
+        console.log('Updating controller list...');
         let cl = this._lib.GetControllerList().split('::');
         this._controllers = {};
         for (let i in cl) this._controllers[cl[i]] = i;
