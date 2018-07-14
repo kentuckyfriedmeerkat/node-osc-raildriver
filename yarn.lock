@@ -793,12 +793,6 @@ os-homedir@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/os-homedir/-/os-homedir-1.0.2.tgz#ffbc4988336e0e833de0c168c7ef152121aa7fb3"
 
-osc-js@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/osc-js/-/osc-js-1.2.2.tgz#8b99937b66638ea93e473ceb04d3714010625b9c"
-  dependencies:
-    ws "^4.0.0"
-
 osc@^2.2.3:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/osc/-/osc-2.2.3.tgz#05c2681a9ca32e25c7171004bbc18609ec707a64"
@@ -1330,13 +1324,6 @@ ws@5.2.0:
   resolved "https://registry.yarnpkg.com/ws/-/ws-5.2.0.tgz#9fd95e3ac7c76f6ae8bcc868a0e3f11f1290c33e"
   dependencies:
     async-limiter "~1.0.0"
-
-ws@^4.0.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-4.1.0.tgz#a979b5d7d4da68bf54efe0408967c324869a7289"
-  dependencies:
-    async-limiter "~1.0.0"
-    safe-buffer "~5.1.0"
 
 xtend@^4.0.0:
   version "4.0.1"
