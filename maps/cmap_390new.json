@@ -1,5 +1,5 @@
 {
-    "SpeedometerMPH": { "format": null },
+    "SpeedometerMPH": { "format": "0.0" },
     "DRA": { "format": null },
     "SpeedSet": { "format": null },
     "EmergencyBrakePlunger": { "format": null },
@@ -27,7 +27,7 @@
     "PantographControl": { "format": null },
     "SpeedSetVelocity": { "format": "0" },
     "gnElectricBrakeForce": { "format": "0.0" },
-    "PoweredAxleNeedle": { "format": null },
+    "PoweredAxleNeedle": { "format": null, "dupl": ["0.0"] },
     "HandBrake": { "format": null },
     "MasterKey": { "format": null }
 }
