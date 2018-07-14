@@ -35,17 +35,21 @@ let messageReceived = msg => {
     let parsedPath = addressPath.partialTest(msg.address);
     if (!parsedPath) return;
     let val = msg.args[0].value;
-    // console.debug(`Rx ${parsedPath.id}: ${val}`);
+    console.debug(`Rx ${parsedPath.id}: ${val}`);
     if (suspensions[parsedPath.id])
         suspensions[parsedPath.id]();
     else {
-        // console.debug(`Is ${parsedPath.id}`);
+        console.debug(`Is ${parsedPath.id}`);
         suspensions[parsedPath.id] = _.debounce(() => {
             suspensions[parsedPath.id] = null;
-            // console.debug(`Ls ${parsedPath.id}`);
+            console.debug(`Ls ${parsedPath.id}`);
         }, suspensionDuration);
     }
     rd.SetControllerValue(parsedPath.id, val);
+};
+
+let oscError = error => {
+    console.debug(`OSC error! ${error}`);
 };
 
 let cmapFormat = (c, val, format) => {
@@ -59,7 +63,7 @@ let sendCmapControllerValues = () => {
     for (let c in Cmap) {
         if (suspensions[c]) continue;
         if (!rd.Controllers[c]) {
-            delete cmap[c];
+            delete Cmap[c];
             continue;
         }
         let rval = rd.GetControllerValue(c);
@@ -79,4 +83,5 @@ oscPort.on('ready', () => {
     console.log('Ready');
     updIntervalRef = setInterval(sendCmapControllerValues, updateInterval);
     oscPort.on('message', messageReceived);
+    oscPort.on('error', oscError);
 });

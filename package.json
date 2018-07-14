@@ -8,6 +8,7 @@
     "lodash": "^4.17.10",
     "numeral": "^2.0.6",
     "osc": "^2.2.3",
-    "path-parser": "^4.2.0"
+    "path-parser": "^4.2.0",
+    "vorpal": "^1.12.0"
   }
 }

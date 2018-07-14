@@ -105,4 +105,8 @@ module.exports = class RailDriver {
         if (!this._connected) this._controllers = {};
         return this._controllers;
     }
+
+    get Connected() {
+        return this._connected;
+    }
 }
