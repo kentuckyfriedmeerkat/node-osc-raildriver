@@ -2,10 +2,10 @@
     "VirtualAmmeter": { "dupl": [ { "mantissa": 0 } ] },
     "MySpeedometerMPH": { "dupl": [ { "mantissa": 0 } ] },
     "MyAirBrakePipePressureBAR": { "dupl": [ { "mantissa": 1 } ] },
-    "VirtualThrottle": {},
-    "VirtualBrake": {},
-    "MyAWS": {},
-    "VirtualReverser": {},
+    "VirtualThrottle": { "notches": [0, 1, 2, 3, 4, 5 ] },
+    "VirtualBrake": { "notches": [0, 1, 2, 3, 4, 5, 6, 7 ] },
+    "AWS": {},
+    "VirtualReverser": { "outsplit": [1, 2, 3] },
     "MyEmergencyBrake": {},
     "DRA": {},
     "MyEngineState": {},
@@ -15,5 +15,6 @@
     "WiperSwitch": {},
     "TailLightsLHS": {},
     "TailLightsRHS": {},
-    "MarkerLights": {}
+    "MarkerLights": {},
+    "HeadlightSwitch": { "outsplit": [0, 1, 2, 3] }
 }

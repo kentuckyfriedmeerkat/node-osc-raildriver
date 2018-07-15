@@ -31,6 +31,19 @@ let sendControl = (address, val, type) => {
     });
 };
 
+let closest = (num, arr) => {
+    let curr = arr[0];
+    let diff = Math.abs(num - curr);
+    for (let val = 0; val < arr.length; val++) {
+        let newdiff = Math.abs(num - arr[val]);
+        if (newdiff < diff) {
+            diff = newdiff;
+            curr = arr[val];
+        }
+    }
+    return curr;
+}
+
 let messageReceived = msg => {
     let parsedPath = addressPath.partialTest(msg.address);
     if (!parsedPath) return;
@@ -47,6 +60,7 @@ let messageReceived = msg => {
         }, suspensionDuration);
         suspensions[parsedPath.id]();
     }
+    if (Cmap[parsedPath.id].notches) val = closest(val, Cmap[parsedPath.id].notches);
     rd.SetControllerValue(parsedPath.id, val);
 };
 
