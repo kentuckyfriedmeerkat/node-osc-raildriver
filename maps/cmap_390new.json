@@ -1,5 +1,5 @@
 {
-    "SpeedometerMPH": { "format": "0.0" },
+    "SpeedometerMPH": { "format": "0" },
     "DRA": {},
     "SpeedSet": {},
     "EmergencyBrakePlunger": {},
@@ -22,12 +22,12 @@
     "MarkerRight": {},
     "HeadLightLeft": {},
     "HeadLightRight": {},
-    "TailLight": { "format": null, "dupl": [null] },
-    "TailLightRemote": { "format": null, "dupl": [null] },
+    "TailLight": { "dupl": [null] },
+    "TailLightRemote": { "dupl": [null] },
     "PantographControl": {},
     "SpeedSetVelocity": { "format": "0" },
     "gnElectricBrakeForce": { "format": "0.0" },
-    "PoweredAxleNeedle": { "format": null, "dupl": ["0.0"] },
+    "PoweredAxleNeedle": { "dupl": ["0.0"] },
     "HandBrake": {},
     "MasterKey": {}
 }

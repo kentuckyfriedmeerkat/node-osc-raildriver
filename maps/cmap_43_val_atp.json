@@ -1,0 +1,19 @@
+{
+    "VirtualAmmeter": { "dupl": [ { "mantissa": 0 } ] },
+    "MySpeedometerMPH": { "dupl": [ { "mantissa": 0 } ] },
+    "MyAirBrakePipePressureBAR": { "dupl": [ { "mantissa": 1 } ] },
+    "VirtualThrottle": {},
+    "VirtualBrake": {},
+    "MyAWS": {},
+    "VirtualReverser": {},
+    "MyEmergencyBrake": {},
+    "DRA": {},
+    "MyEngineState": {},
+    "MasterKey": {},
+    "ETHState": {},
+    "HandBrake": {},
+    "WiperSwitch": {},
+    "TailLightsLHS": {},
+    "TailLightsRHS": {},
+    "MarkerLights": {}
+}

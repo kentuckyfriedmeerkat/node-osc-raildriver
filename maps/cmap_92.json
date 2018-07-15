@@ -1,0 +1,43 @@
+{
+    "MasterKey": {},
+    "VirtualReverser": { "outsplit": [0, 1, 2, 3] },
+    "AWS": {},
+    "DisplaySpeedometer": { "format": { "mantissa": 0 }},
+    "Wheelslip": {},
+    "VCBLocal": {},
+    "VCBRemote": {},
+    "LineVoltsLocal": {},
+    "LineVoltsRemote": {},
+    "PanUpShoesDownToggle": {},
+    "BrakePipe": { "dupl": [ { "mantissa": 1 } ] },
+    "BrakePipeTarget": { "dupl": [ { "mantissa": 1 } ] },
+    "PassGoods": {},
+    "LocoBrakeCylinderPressureBAR": { "dupl": [ { "mantissa": 1 } ] },
+    "EmergencyPlunger": {},
+    "TeMeter": {},
+    "TailLights": {},
+    "UpperHeadLight": {},
+    "Wipers": {},
+    "WiperSpeed": {},
+    "FanStage": {},
+    "VirtualThrottle": {},
+    "OverTemp": {},
+    "FAP": {},
+    "PowerModeSelector": { "outsplit": [0, 1, 2, 3, [0, 1], [2, 3]], "remap": {
+        "id": "PowerModeName",
+        "map": {
+            "0": "BR 750 V MODE",
+            "1": "BR 25 kV MODE",
+            "2": "CTRL MODE",
+            "3": "ET AC MODE"
+        }
+    } },
+    "VirtualHeadlights": { "outsplit": [0, 1, 2, 3] },
+    "HandBrake": {},
+    "SpeedSetHundreds": { "maskneg": true },
+    "SpeedSetTens": { "maskneg": true },
+    "SpeedSetUnits": { "maskneg": true },
+    "SpeedSelector": {},
+    "DSDEnabled": {},
+    "BoostButton": {}
+}

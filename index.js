@@ -2,7 +2,7 @@ let FS = require('fs');
 let OSC = require('osc');
 let Path = require('path-parser').default;
 let _ = require('lodash');
-let Numeral = require('numeral');
+let Numbro = require('numbro');
 let RailDriver = require('./raildriver');
 
 let Config = JSON.parse(FS.readFileSync('config.json'));
@@ -12,20 +12,20 @@ let rd = new RailDriver(Config.dll);
 
 // ---------------------------------------------------
 const addressPath = new Path('/control/:id');
-const suspensionDuration = 500;
-const updateInterval = 50;
+const suspensionDuration = 75;
+const updateInterval = 20;
 
 let suspensions = {};
 let previousVal = {};
 let oscPort = new OSC.UDPPort(Config.port);
 
-let sendControl = (address, val) => {
+let sendControl = (address, val, type) => {
     if (suspensions[address]) return;
     // console.debug(`Tx ${address}: ${val}`);
     oscPort.send({
         address: `/control/${address}`,
         args: [{
-            type: 'f',
+            type: type,
             value: val
         }]
     });
@@ -36,14 +36,16 @@ let messageReceived = msg => {
     if (!parsedPath) return;
     let val = msg.args[0].value;
     console.debug(`Rx ${parsedPath.id}: ${val}`);
-    if (suspensions[parsedPath.id])
+    if (suspensions[parsedPath.id]) {
         suspensions[parsedPath.id]();
+    }
     else {
         console.debug(`Is ${parsedPath.id}`);
         suspensions[parsedPath.id] = _.debounce(() => {
             suspensions[parsedPath.id] = null;
             console.debug(`Ls ${parsedPath.id}`);
         }, suspensionDuration);
+        suspensions[parsedPath.id]();
     }
     rd.SetControllerValue(parsedPath.id, val);
 };
@@ -55,7 +57,7 @@ let oscError = error => {
 let cmapFormat = (c, val, format) => {
     let _form = format || Cmap[c].format || null;
     if (_form)
-        val = Numeral(val).format(_form);
+        val = Numbro(val).format(_form);
     return val;
 }
 
@@ -67,12 +69,25 @@ let sendCmapControllerValues = () => {
             continue;
         }
         let rval = rd.GetControllerValue(c);
-        if (!previousVal[c] || previousVal[c] != rval) previousVal[c] = rval;
-        else continue;
+        if (Cmap[c].maskneg && rval < 0) {
+            sendControl(c, '', 's');
+            continue;
+        }
         let cval = cmapFormat(c, rval);
-        sendControl(c, cval);
+        if (!previousVal[c] || previousVal[c] != cval) previousVal[c] = cval;
+        else continue;
+        sendControl(c, cval, 's');
         if (Cmap[c].dupl) for (let i in Cmap[c].dupl)
-            sendControl(`${c}_${i}`, cmapFormat(c, rval, Cmap[c].dupl[i]))
+            sendControl(`${c}/${i}`, cmapFormat(c, rval, Cmap[c].dupl[i]), 's')
+        if (Cmap[c].outsplit) for (let i in Cmap[c].outsplit) {
+            let x = Cmap[c].outsplit;
+            let val = null;
+            if (typeof x[i] == 'number') val = cval == x[i]? 1 : 0;
+            else if (Array.isArray(x[i])) val = x[i].includes(cval);
+            sendControl(`${c}_split${i}`, val, 'f')
+        }
+        if (Cmap[c].remap)
+            sendControl(`${Cmap[c].remap.id}`, Cmap[c].remap.map[cval.toString()] || "Error", 's')
     }
 }
 
