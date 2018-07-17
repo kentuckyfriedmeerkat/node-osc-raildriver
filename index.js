@@ -60,7 +60,10 @@ let messageReceived = msg => {
         }, suspensionDuration);
         suspensions[parsedPath.id]();
     }
-    if (Cmap[parsedPath.id].notches) val = closest(val, Cmap[parsedPath.id].notches);
+    if (Cmap[parsedPath.id] && Cmap[parsedPath.id].notches) {
+        val = closest(val, Cmap[parsedPath.id].notches);
+        console.debug(`Sn ${parsedPath.id}: ${val}`);
+    }
     rd.SetControllerValue(parsedPath.id, val);
 };
 
