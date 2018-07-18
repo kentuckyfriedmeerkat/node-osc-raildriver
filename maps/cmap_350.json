@@ -1,0 +1,5 @@
+{
+    "SpeedometerMPH": { "dupl": [ { "mantissa": 0 } ] },
+    "BrakingDrivingPercentage": {},
+    "ThrottleAndBrake": { "notches": [ -0.08, -0.16, -0.24, -0.32, -0.40, -0.48, -0.56, -0.64, -0.72, -1] }
+}

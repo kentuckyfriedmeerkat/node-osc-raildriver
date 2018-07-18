@@ -11,3 +11,5 @@ for (let c in rd.Controllers) {
     let cur = rd.GetControllerValue(c);
     console.log(`${c}: Min ${min}, current ${cur}, max ${max}`);
 }
+
+rd.Disconnect();
