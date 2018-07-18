@@ -1,9 +1,11 @@
 let ffi = require('ffi');
 let ref = require('ref');
+let Signale = require('Signale').Signale;
+let logger = new Signale({ scope: 'raildriver' });
 
 module.exports = class RailDriver {
     constructor(dll) {
-        console.log(`Connecting to DLL at ${dll}...`);
+        logger.start(`Connecting to DLL at ${dll}...`);
         this._lib = ffi.Library(dll, {
             SetRailSimConnected: ['void', ['bool']],
             SetRailDriverConnected: ['void', ['bool']],
@@ -40,7 +42,7 @@ module.exports = class RailDriver {
 
     Connect() {
         if (this._connected) return;
-        console.log('Connecting RailDriver interface...');
+        logger.start('Connecting RailDriver interface...');
         this._lib.SetRailSimConnected(true);
         this._lib.SetRailDriverConnected(true);
         this._connected = true;
@@ -65,13 +67,13 @@ module.exports = class RailDriver {
 
     get HasLocoChanged() {
         if (!this._connected) return false;
-        console.log(`Loco changed!`);
+        logger.info(`Loco changed!`);
         return this._lastLoco != this._lib.GetLocoName();
     }
 
     UpdateControllerList() {
         if (!this._connected) return;
-        console.log('Updating controller list...');
+        logger.start('Updating controller list...');
         let cl = this._lib.GetControllerList().split('::');
         this._controllers = {};
         for (let i in cl) this._controllers[cl[i]] = i;
