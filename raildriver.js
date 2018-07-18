@@ -1,7 +1,6 @@
 let ffi = require('ffi');
-let ref = require('ref');
 let Signale = require('Signale').Signale;
-let logger = new Signale({ scope: 'raildriver' });
+let logger = new Signale({ scope: 'raildriv' });
 
 module.exports = class RailDriver {
     constructor(dll) {
@@ -37,7 +36,7 @@ module.exports = class RailDriver {
             TimeHours: 406,
             TimeMins: 407,
             TimeSecs: 408
-        }
+        };
     }
 
     Connect() {
@@ -111,4 +110,4 @@ module.exports = class RailDriver {
     get Connected() {
         return this._connected;
     }
-}
+};

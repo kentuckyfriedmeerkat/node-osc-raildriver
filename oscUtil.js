@@ -59,7 +59,7 @@ Vorpal.command('close', 'Close the OSC port')
             console.log(`Error closing OSC port: ${error}`);
         }
         callback();
-    })
+    });
 
 Vorpal.command('send <addr> [args...]', 'Send an OSC message')
     .action((args, callback) => {
@@ -75,7 +75,7 @@ Vorpal.command('send <addr> [args...]', 'Send an OSC message')
             osc.send({
                 address: args.addr,
                 args: args.args
-            }, internalOptions.rhost, internalOptions.rport)
+            }, internalOptions.rhost, internalOptions.rport);
         } catch (error) {
             console.log(`Error sending OSC message: ${error}`);
         }
@@ -86,7 +86,7 @@ Vorpal.command('list', 'List currently set internal options')
     .action((args, callback) => {
         console.log(_.keys(internalOptions));
         callback();
-    })
+    });
 
 Vorpal.command('get <opt>', 'Get the value of an internal option')
     .action((args, callback) => {
@@ -105,6 +105,6 @@ Vorpal.command('unset <opt>', 'Unset an internal option')
         if (internalOptions[args.opt]) delete internalOptions[args.opt];
         else console.log('Not found');
         callback();
-    })
+    });
 
 Vorpal.delimiter('osc$').show();

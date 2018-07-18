@@ -1,5 +1,5 @@
 let Signale = require('signale').Signale;
-let Logger = new Signale({ scope: 'global' });
+let Logger = new Signale({ scope: 'globscop' });
 if (!process.argv[2])
     return Logger.error(new Error('A file path for a control map was not specified'));
 

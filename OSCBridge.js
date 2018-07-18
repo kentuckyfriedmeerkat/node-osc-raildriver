@@ -4,7 +4,7 @@ let Numbro = require('numbro');
 let _ = require('lodash');
 let Signale = require('signale').Signale;
 let Logger = new Signale({
-    scope: 'oscbridge'
+    scope: 'oscbridg'
 });
 
 let _rd = {};
@@ -13,7 +13,6 @@ let _previousVal = {};
 let _cmap = {};
 let _oscPort = {};
 let _config = {};
-let _updIntervalRef = 0;
 
 const addressPath = new Path('/control/:id');
 const suspensionDuration = 75;
@@ -71,7 +70,7 @@ let formatValue = (c, val, format) => {
     let cval = Numbro(val).format(_form);
     debugger;
     return cval;
-}
+};
 
 let filterValue = (c, rval) => {
     if (_cmap[c].maskneg && rval < 0) return '';
@@ -90,13 +89,13 @@ let postmap = (c, rval, cval) => {
         let val = null;
         if (typeof x[i] == 'number') val = cval == x[i]? 1 : 0;
         else if (Array.isArray(x[i])) val = x[i].includes(cval);
-        sendControl(`${c}_split${i}`, val, 'f')
+        sendControl(`${c}_split${i}`, val, 'f');
     }
 
     // Todo: rename to 'namemap'
     // Map values to a hash, e.g. numbers to strings
     if (_cmap[c].remap)
-        sendControl(`${_cmap[c].remap.id}`, _cmap[c].remap.map[cval.toString()] || "Error", 's');
+        sendControl(`${_cmap[c].remap.id}`, _cmap[c].remap.map[cval.toString()] || 'Error', 's');
 };
 
 let sendCmapControllerValues = () => {
@@ -155,7 +154,7 @@ module.exports = class OSCBridge {
         _oscPort.on('ready', () => {
             _rd.Connect();
             Logger.success('Ready');
-            _updIntervalRef = setInterval(sendCmapControllerValues, updateInterval);
+            setInterval(sendCmapControllerValues, updateInterval);
             _oscPort.on('message', messageReceived);
             _oscPort.on('error', oscError);
         });
@@ -164,4 +163,4 @@ module.exports = class OSCBridge {
     Open() {
         _oscPort.open();
     }
-}
+};
