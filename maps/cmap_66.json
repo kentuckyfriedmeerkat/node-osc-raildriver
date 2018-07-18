@@ -1,15 +1,15 @@
 {
-    "VirtualRPM": { "format": "0" },
-    "Ammeter": { "format": "0" },
-    "Wipers": { "format": null },
-    "Wipers2": { "format": null },
-    "CabEQNeedle": { "format": "0.0" },
-    "PassGoods": { "format": "0" },
-    "VirtualThrottle": { "format": null },
-    "EmergencyPlunger": { "format": null },
-    "BrakeCylinder1Bars": { "format": "0.0" },
-    "SpeedometerMPH": { "format": "0" },
-    "AWS": { "format": null },
-    "ReverserIn": { "format": null },
-    "BrakePipePressureBAR": { "format": "0.0" }
+    "VirtualRPM": { "format": { "mantissa": 0 } },
+    "Ammeter": { "format": { "mantissa": 0 } },
+    "Wipers": {},
+    "Wipers2": {},
+    "CabEQNeedle": { "format": { "mantissa": 1 } },
+    "PassGoods": { "format": { "mantissa": 0 } },
+    "VirtualThrottle": {},
+    "EmergencyPlunger": {},
+    "BrakeCylinder1Bars": { "format": { "mantissa": 1 } },
+    "SpeedometerMPH": { "format": { "mantissa": 0 } },
+    "AWS": {},
+    "ReverserIn": {},
+    "BrakePipePressureBAR": { "format": { "mantissa": 1 } }
 }

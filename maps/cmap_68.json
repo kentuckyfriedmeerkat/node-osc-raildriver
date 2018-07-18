@@ -1,17 +1,17 @@
 {
-    "SpeedometerMPH": { "format": "0" },
+    "SpeedometerMPH": { "format": { "mantissa": 0 } },
     "ThrottleAndBrake": { "format": null },
     "DRAButton": { "format": null },
     "AWS": { "format": null },
     "tpws_aws_flash": { "format": null },
     "tpws_spad_flash": { "format": null },
     "tpws_overspeed_flash": { "format": null },
-    "CabEQNeedle": { "format": "0.0" },
-    "LocoBrakeCylinderDisplayed": { "format": "0.0" },
+    "CabEQNeedle": { "format": { "mantissa": 1 } },
+    "LocoBrakeCylinderDisplayed": { "format": { "mantissa": 1 } },
     "AWSIsolation": { "format": null },
     "HazardLightsRelay": { "format": null },
     "Wheelslip": { "format": null },
-    "Ammeter": { "format": "0" },
-    "VirtualRPM": { "format": "0" },
-    "TractiveEffort": { "format": "0" } 
+    "Ammeter": { "format": { "mantissa": 0 } },
+    "VirtualRPM": { "format": { "mantissa": 0 } },
+    "TractiveEffort": { "format": { "mantissa": 0 } } 
 }
