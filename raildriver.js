@@ -66,7 +66,7 @@ module.exports = class RailDriver {
 
     get HasLocoChanged() {
         if (!this._connected) return false;
-        logger.info(`Loco changed!`);
+        logger.info('Loco changed!');
         return this._lastLoco != this._lib.GetLocoName();
     }
 
