@@ -1,5 +1,35 @@
 {
     "SpeedometerMPH": { "dupl": [ { "mantissa": 0 } ] },
     "BrakingDrivingPercentage": {},
-    "ThrottleAndBrake": { "notches": [ -0.08, -0.16, -0.24, -0.32, -0.40, -0.48, -0.56, -0.64, -0.72, -1] }
+    "ThrottleAndBrake": { "notches": [ -1, -0.72, -0.68, -0.64, -0.6, -0.56, -0.52, -0.48, -0.44, -0.4, -0.36, -0.32, -0.28, -0.24, -0.2, -0.16, -0.12, -0.08, -0.04, 0, 0.2, 0.4, 0.6, 0.8, 1 ] },
+    "TrainBrakeCylinderPressureBAR": { "dupl": [ { "mantissa": 1 } ] },
+    "MainReservoirPressureBAR": { "dupl": [ { "mantissa": 1 } ] },
+    "PantographControl": {},
+    "DoorsInterlock": {},
+    "LineVolts": {},
+    "DRA": {},
+    "Sander": {},
+    "Reverser": { "notches": [ -1, 0, 1 ] },
+    "AWS": {},
+    "LowSpeed": {},
+    "Wipers": {},
+    "Headlights": { "notches": [ 0, 1, 2, 3, 4 ] },
+    "Destination": { "remap": {
+        "id": "DestName",
+        "map": {
+            "0": "Not in Service",
+            "1": "Crewe",
+            "2": "Stafford",
+            "3": "Nuneaton",
+            "4": "Birmingham",
+            "5": "Coventry",
+            "6": "Rugby",
+            "7": "Northampton",
+            "8": "Milton Keynes",
+            "9": "Bletchley",
+            "10": "Watford Junction",
+            "11": "London Euston",
+            "12": "Special"
+        }
+    }}
 }

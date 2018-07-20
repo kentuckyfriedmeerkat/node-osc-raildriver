@@ -96,13 +96,18 @@ let postmap = (c, rval, cval) => {
     // Map values to a hash, e.g. numbers to strings
     if (_cmap[c].remap)
         sendControl(`${_cmap[c].remap.id}`, _cmap[c].remap.map[cval.toString()] || 'Error', 's');
+
+    if (_cmap[c].receiver)
+        sendControl(`${c}/r`, cval, 's');
 };
 
 let sendCmapControllerValues = () => {
     for (let c in _cmap) {
+        let suspended = false;
+
         // If there's a suspension in place for the current
         // OSC address, skip to the next one
-        if (_suspensions[c]) continue;
+        if (_suspensions[c]) suspended = true;
         
         // If the controller doesn't actually exist in RailWorks,
         // forget about it in the Cmap, and then skip to the next
@@ -125,7 +130,7 @@ let sendCmapControllerValues = () => {
         else continue; // Don't send if it's the same
 
         // If everything else works, send the control value
-        sendControl(c, cval, 's');
+        if (!suspended) sendControl(c, cval, 's');
 
         // Now do post-map things with it
         postmap(c, rval, cval);
