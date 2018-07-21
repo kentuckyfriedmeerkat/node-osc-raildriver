@@ -1,4 +1,5 @@
 let Path = require('path-parser').default;
+let URLPattern = require('url-pattern');
 let OSC = require('osc');
 let Numbro = require('numbro');
 let _ = require('lodash');
@@ -14,7 +15,7 @@ let _cmap = {};
 let _oscPort = {};
 let _config = {};
 
-const addressPath = new Path('/control/:id');
+const addressPath = new URLPattern('/control/:id(/:command)');
 const suspensionDuration = 75;
 const updateInterval = 20;
 
@@ -33,7 +34,7 @@ let closest = (num, arr) => {
 
 let messageReceived = msg => {
     // Parse the path
-    let parsedPath = addressPath.partialTest(msg.address);
+    let parsedPath = addressPath.match(msg.address);
     parsedPath.id = parsedPath.id.replace('+', ' ');
 
     // If it's unusable, discard it
@@ -116,7 +117,7 @@ let postmap = (c, rval, cval) => {
     return packets;
 };
 
-let sendCmapControllerValues = () => {
+let sendCmapControllerValues = (trackPrevious = true) => {
     let bundle = { timeTag: OSC.timeTag(0), packets: [] };
     for (let c in _cmap) {
         let suspended = false;
@@ -144,7 +145,7 @@ let sendCmapControllerValues = () => {
         if (!suspended) {
             if (!_previousVal[c] || _previousVal[c] != cval)
                 _previousVal[c] = cval;
-            else continue; // Don't send if it's the same
+            else if (trackPrevious) continue; // Don't send if it's the same
 
             // If everything else works, send the control value
             // sendControl(c, cval, 's');
