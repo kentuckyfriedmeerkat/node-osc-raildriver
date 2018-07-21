@@ -1,4 +1,4 @@
-let RailDriver = require('./raildriver');
+let RailDriver = require('./modules/raildriver');
 let fs = require('fs');
 let config = JSON.parse(fs.readFileSync('config.json'));
 
