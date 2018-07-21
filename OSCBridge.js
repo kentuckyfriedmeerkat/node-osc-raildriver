@@ -1,4 +1,3 @@
-let Path = require('path-parser').default;
 let URLPattern = require('url-pattern');
 let OSC = require('osc');
 let Numbro = require('numbro');
