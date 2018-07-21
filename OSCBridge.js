@@ -62,7 +62,7 @@ let messageReceived = msg => {
 };
 
 let oscError = error => {
-    Logger.warn(error);
+    Logger.error(error);
 };
 
 let formatValue = (c, val, format) => {
@@ -78,10 +78,22 @@ let filterValue = (c, rval) => {
     return formatValue(c, rval);
 };
 
+let formPacket = (c, cval) => {
+    return {
+        address: `/control/${c}`,
+        args: [{
+            type: 's',
+            value: cval
+        }]
+    };
+};
+
 let postmap = (c, rval, cval) => {
+    let packets = [];
+
     // Duplicate values with different formats
     if (_cmap[c].dupl) for (let i in _cmap[c].dupl)
-        sendControl(`${c}/${i}`, formatValue(c, cval, _cmap[c].dupl[i]), 's');
+        packets.push(formPacket(`${c}/${i}`, formatValue(c, cval, _cmap[c].dupl[i])));
 
     // Todo: change from _split to /split/ or something similar
     // Create an output c == i to get around TouchOSC LED limitations
@@ -90,19 +102,22 @@ let postmap = (c, rval, cval) => {
         let val = null;
         if (typeof x[i] == 'number') val = cval == x[i]? 1 : 0;
         else if (Array.isArray(x[i])) val = x[i].includes(cval);
-        sendControl(`${c}_split${i}`, val, 'f');
+        packets.push(formPacket(`${c}_split${i}`, val));
     }
 
     // Todo: rename to 'namemap'
     // Map values to a hash, e.g. numbers to strings
     if (_cmap[c].remap)
-        sendControl(`${_cmap[c].remap.id}`, _cmap[c].remap.map[cval.toString()] || 'Error', 's');
+        packets.push(formPacket(`${_cmap[c].remap.id}`, _cmap[c].remap.map[cval.toString()] || 'Error'));
 
     if (_cmap[c].receiver)
-        sendControl(`${c}/r`, cval, 's');
+        packets.push(formPacket(`${c}/r`, cval));
+
+    return packets;
 };
 
 let sendCmapControllerValues = () => {
+    let bundle = { timeTag: OSC.timeTag(0), packets: [] };
     for (let c in _cmap) {
         let suspended = false;
 
@@ -132,25 +147,16 @@ let sendCmapControllerValues = () => {
             else continue; // Don't send if it's the same
 
             // If everything else works, send the control value
-            sendControl(c, cval, 's');
+            // sendControl(c, cval, 's');
+            bundle.packets.push(formPacket(c, cval));
         }
 
         // Now do post-map things with it
-        postmap(c, rval, cval);
+        for (let i of postmap(c, rval, cval)) {
+            bundle.packets.push(i);
+        }
     }
-};
-
-let sendControl = (address, val, type) => {
-    // If there's a suspension in place for the current
-    // OSC address, don't bother
-    if (_suspensions[address]) return;
-    _oscPort.send({
-        address: `/control/${address}`,
-        args: [{
-            type: type,
-            value: val
-        }]
-    });
+    _oscPort.send(bundle);
 };
 
 module.exports = class OSCBridge {
