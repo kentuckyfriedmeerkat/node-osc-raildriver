@@ -34,6 +34,7 @@ let closest = (num, arr) => {
 let messageReceived = msg => {
     // Parse the path
     let parsedPath = addressPath.partialTest(msg.address);
+    parsedPath.id = parsedPath.id.replace('+', ' ');
 
     // If it's unusable, discard it
     if (!parsedPath)
@@ -125,12 +126,14 @@ let sendCmapControllerValues = () => {
         // Keeping track of previous values to try and
         // reduce network traffic by not sending unchanged
         // values
-        if (!_previousVal[c] || _previousVal[c] != cval)
-            _previousVal[c] = cval;
-        else continue; // Don't send if it's the same
+        if (!suspended) {
+            if (!_previousVal[c] || _previousVal[c] != cval)
+                _previousVal[c] = cval;
+            else continue; // Don't send if it's the same
 
-        // If everything else works, send the control value
-        if (!suspended) sendControl(c, cval, 's');
+            // If everything else works, send the control value
+            sendControl(c, cval, 's');
+        }
 
         // Now do post-map things with it
         postmap(c, rval, cval);
