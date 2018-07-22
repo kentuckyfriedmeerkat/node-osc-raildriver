@@ -101,14 +101,14 @@ let postmap = (c, rval, cval) => {
         let x = _cmap[c].outsplit;
         let val = null;
         if (typeof x[i] == 'number') val = cval == x[i]? 1 : 0;
-        else if (Array.isArray(x[i])) val = x[i].includes(cval);
+        else if (Array.isArray(x[i])) val = x[i].includes(cval)? 1 : 0;
         packets.push(formPacket(`${c}_split${i}`, val));
     }
 
     // Todo: rename to 'namemap'
     // Map values to a hash, e.g. numbers to strings
     if (_cmap[c].remap)
-        packets.push(formPacket(`${_cmap[c].remap.id}`, _cmap[c].remap.map[cval.toString()] || 'Error'));
+        packets.push(formPacket(`${_cmap[c].remap.id}`, _cmap[c].remap.map[cval.toString()] || ''));
 
     if (_cmap[c].receiver)
         packets.push(formPacket(`${c}/r`, cval));
