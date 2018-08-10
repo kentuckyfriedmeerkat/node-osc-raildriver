@@ -1,0 +1,37 @@
+MySpeedometerMPH:
+    dupl:
+        - mantissa: 0
+DRA: {}
+DRALight: {}
+AWS: {}
+SpeedSet: {}
+LineLight: {}
+TPWSBrakeDemandLight: {}
+TPWSTempFaultLight: {}
+TPWSTrainStopOverrideLight: {}
+AuxState: {}
+MasterKey: {}
+VirtualReverser:
+    outsplit: [ 1, 2, 3 ]
+DVDIsolate: {}
+DRAIsolate: {}
+AWSIsolate: {}
+DSDIsolate: {}
+EBKIsolate: {}
+SafetySystemsIsolated: {}
+OtherCabOn: {}
+DoorInterlockLight: {}
+DoorReleaseLightLeft: {}
+DoorReleaseLightRight: {}
+HazardLight: {}
+HazardLightSwitch: {}
+HeadlightSwitch:
+    outsplit: [ 1, 2, 3, 4 ]
+WiperSwitch:
+    outsplit: [ 1, 2 ]
+EmergencyPlungerLeft: {}
+EmergencyPlungerCenter: {}
+ThrottleAndBrake: {}
+MyBrakeCylinderPressureBAR:
+    dupl:
+        - mantissa: 1

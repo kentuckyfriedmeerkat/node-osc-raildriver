@@ -92,8 +92,11 @@ let postmap = (c, rval, cval) => {
     let packets = [];
 
     // Duplicate values with different formats
-    if (_cmap[c].dupl) for (let i in _cmap[c].dupl)
-        packets.push(formPacket(`${c}/${i}`, formatValue(c, cval, _cmap[c].dupl[i])));
+    if (_cmap[c].dupl) {
+        if (!Array.isArray(_cmap[c].dupl)) _cmap[c].dupl = [_cmap[c].dupl];
+        for (let i in _cmap[c].dupl)
+            packets.push(formPacket(`${c}/${i}`, formatValue(c, cval, _cmap[c].dupl[i])));
+    }
 
     // Todo: change from _split to /split/ or something similar
     // Create an output c == i to get around TouchOSC LED limitations
@@ -119,6 +122,8 @@ let postmap = (c, rval, cval) => {
 let sendCmapControllerValues = (trackPrevious = true) => {
     let bundle = { timeTag: OSC.timeTag(0), packets: [] };
     for (let c in _cmap) {
+        if (c.startsWith('_')) continue;
+
         let suspended = false;
 
         // If there's a suspension in place for the current
