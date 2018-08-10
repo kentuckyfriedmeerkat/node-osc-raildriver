@@ -1,32 +1,45 @@
-VirtualRPM:
-  format:
-    mantissa: 0
-Ammeter:
-  format:
-    mantissa: 0
-Wipers: {}
-Wipers2: {}
-CabEQNeedle:
-  dupl:
-    - mantissa: 1
-PassGoods:
-  outsplit: [ 0, 1 ]
-VirtualThrottle: {}
-VirtualHeadlights:
-  outsplit: [ 1, 2, 3 ]
-EmergencyPlunger: {}
-BrakeCylinder1Bars:
-  dupl:
-    - mantissa: 1
-SpeedometerMPH:
-  dupl:
-    - mantissa: 0
-AWS: {}
-Reverser:
-  outsplit: [ -1, 1 ]
-ReverserIn: {}
-BrakePipePressureBAR:
-  dupl:
-    - mantissa: 1
-TaillightSwitch: {}
-ParkingBrakeStatus: {}
+intercepts:
+  RPM: VirtualRPM
+  Power: VirtualThrottle
+  BrakeControl: CabEQNeedle
+  BrakePipe: BrakePipePressureBAR
+  BrakeCylinder: BrakeCylinder1Bars
+  MasterKey: ReverserIn
+  Headlights: VirtualHeadlights
+  Taillights: TaillightSwitch
+  Speedometer: SpeedometerMPH
+  PBLBrake: VirtualBrake
+  LocoBrake: EngineBrakeControl
+base:
+  RPM:
+    format:
+      mantissa: 0
+  Ammeter:
+    format:
+      mantissa: 0
+  Wipers: {}
+  Wipers2: {}
+  BrakeControl:
+    dupl:
+      - mantissa: 1
+  PassGoods:
+    outsplit: [ 0, 1 ]
+  Power: {}
+  Headlights:
+    outsplit: [ 1, 2, 3 ]
+  EmergencyPlunger: {}
+  BrakeCylinder:
+    dupl:
+      - mantissa: 1
+  Speedometer:
+    dupl:
+      - mantissa: 0
+  AWS: {}
+  Reverser:
+    outsplit: [ -1, 1 ]
+  MasterKey: {}
+  BrakePipe:
+    dupl:
+      - mantissa: 1
+  Taillights: {}
+  ParkingBrakeStatus: {}

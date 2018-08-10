@@ -1,9 +1,10 @@
+let _ = require('lodash');
 let ffi = require('ffi');
 let Signale = require('Signale').Signale;
 let logger = new Signale({ scope: 'raildriv' });
 
 module.exports = class RailDriver {
-    constructor(dll) {
+    constructor(dll, intercepts = {}) {
         logger.start(`Connecting to DLL at ${dll}...`);
         this._lib = ffi.Library(dll, {
             SetRailSimConnected: ['void', ['bool']],
@@ -13,10 +14,12 @@ module.exports = class RailDriver {
             GetControllerValue: ['float', ['int', 'int']],
             SetControllerValue: ['void', ['int', 'float']]
         });
-        
+
         this._lastLoco = '';
         this._controllers = {};
         this._connected = false;
+        this._intercepts = intercepts;
+        this._interceptedControllers = {};
 
         this.Loco = class {
             constructor(vendor, pack, model) {
@@ -76,27 +79,36 @@ module.exports = class RailDriver {
         let cl = this._lib.GetControllerList().split('::');
         this._controllers = {};
         for (let i in cl) this._controllers[cl[i]] = i;
+        this._interceptedControllers = _.mapKeys(this._controllers, (value, key) => _.invert(this._intercepts)[key] || key);
     }
 
     GetControllerValue(controllerName) {
+        if (this._intercepts[controllerName])
+            controllerName = this._intercepts[controllerName];
         if (!this._connected) return;
         if (!this._controllers[controllerName]) return;
         return this._lib.GetControllerValue(this._controllers[controllerName], 0);
     }
 
     GetControllerMin(controllerName) {
+        if (this._intercepts[controllerName])
+            controllerName = this._intercepts[controllerName];
         if (!this._connected) return;
         if (!this._controllers[controllerName]) return;
         return this._lib.GetControllerValue(this._controllers[controllerName], 1);
     }
 
     GetControllerMax(controllerName) {
+        if (this._intercepts[controllerName])
+            controllerName = this._intercepts[controllerName];
         if (!this._connected) return;
         if (!this._controllers[controllerName]) return;
         return this._lib.GetControllerValue(this._controllers[controllerName], 2);
     }
 
     SetControllerValue(controllerName, value) {
+        if (this._intercepts[controllerName])
+            controllerName = this._intercepts[controllerName];
         if (!this._connected) return;
         if (!this._controllers[controllerName]) return;
         this._lib.SetControllerValue(this._controllers[controllerName], value);
@@ -104,7 +116,7 @@ module.exports = class RailDriver {
 
     get Controllers() {
         if (!this._connected) this._controllers = {};
-        return this._controllers;
+        return this._interceptedControllers;
     }
 
     get Connected() {

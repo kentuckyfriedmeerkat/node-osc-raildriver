@@ -6,6 +6,7 @@ let Signale = require('signale').Signale;
 let Logger = new Signale({
     scope: 'oscbridg'
 });
+let RailDriver = require('./RailDriver');
 
 let _rd = {};
 let _suspensions = {};
@@ -95,7 +96,7 @@ let postmap = (c, rval, cval) => {
     if (_cmap[c].dupl) {
         if (!Array.isArray(_cmap[c].dupl)) _cmap[c].dupl = [_cmap[c].dupl];
         for (let i in _cmap[c].dupl)
-            packets.push(formPacket(`${c}/${i}`, formatValue(c, cval, _cmap[c].dupl[i])));
+            packets.push(formPacket(`${c}/dupl/${i}`, formatValue(c, cval, _cmap[c].dupl[i])));
     }
 
     // Todo: change from _split to /split/ or something similar
@@ -105,13 +106,13 @@ let postmap = (c, rval, cval) => {
         let val = null;
         if (typeof x[i] == 'number') val = cval == x[i]? 1 : 0;
         else if (Array.isArray(x[i])) val = x[i].includes(cval)? 1 : 0;
-        packets.push(formPacket(`${c}_split${i}`, val));
+        packets.push(formPacket(`${c}/split/${i}`, val));
     }
 
     // Todo: rename to 'namemap'
     // Map values to a hash, e.g. numbers to strings
     if (_cmap[c].remap)
-        packets.push(formPacket(`${_cmap[c].remap.id}`, _cmap[c].remap.map[cval.toString()] || ''));
+        packets.push(formPacket(`${c}/remap/${_cmap[c].remap.id}`, _cmap[c].remap.map[cval.toString()] || ''));
 
     if (_cmap[c].receiver)
         packets.push(formPacket(`${c}/r`, cval));
@@ -122,8 +123,6 @@ let postmap = (c, rval, cval) => {
 let sendCmapControllerValues = (trackPrevious = true) => {
     let bundle = { timeTag: OSC.timeTag(0), packets: [] };
     for (let c in _cmap) {
-        if (c.startsWith('_')) continue;
-
         let suspended = false;
 
         // If there's a suspension in place for the current
@@ -165,10 +164,10 @@ let sendCmapControllerValues = (trackPrevious = true) => {
 };
 
 module.exports = class OSCBridge {
-    constructor(railDriver, config, cmap) {
-        _rd = railDriver;
-        _cmap = cmap;
-        _config = config;
+    constructor(config, cmap) {
+        _rd = new RailDriver(config.dll, cmap.intercepts);
+        _cmap = cmap.base;
+        _config = config.port;
         _oscPort = new OSC.UDPPort(_config);
         _oscPort.on('ready', () => {
             _rd.Connect();
