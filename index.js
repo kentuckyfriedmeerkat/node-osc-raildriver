@@ -2,7 +2,7 @@ let Yaml = require('js-yaml');
 let argv = require('yargs').argv;
 
 if (!argv.cmap)
-    return Logger.error(new Error('A file path for a control map was not specified'));
+    return console.log(new Error('A file path for a control map was not specified'));
 
 let FS = require('fs');
 let OSCBridge = require('./modules/OSCBridge');
