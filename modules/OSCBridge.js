@@ -111,8 +111,11 @@ let postmap = (c, rval, cval) => {
 
     // Todo: rename to 'namemap'
     // Map values to a hash, e.g. numbers to strings
-    if (_cmap[c].remap)
-        packets.push(formPacket(`${c}/remap/${_cmap[c].remap.id}`, _cmap[c].remap.map[cval.toString()] || ''));
+    if (_cmap[c].remap) {
+        if (!Array.isArray(_cmap[c].remap)) _cmap[c].remap = [ _cmap[c].remap ];
+        for (let item in _cmap[c].remap)
+            packets.push(formPacket(`${c}/remap/${_cmap[c].remap.id}`, _cmap[c].remap.map[cval.toString()] || ''));
+    }
 
     if (_cmap[c].receiver)
         packets.push(formPacket(`${c}/r`, cval));
