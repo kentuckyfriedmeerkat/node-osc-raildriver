@@ -1,6 +1,7 @@
 let RailDriver = require('./modules/raildriver');
+let Yaml = require('js-yaml');
 let fs = require('fs');
-let config = JSON.parse(fs.readFileSync('config.json'));
+let config = Yaml.safeLoad(fs.readFileSync('config.yaml'));
 
 let rd = new RailDriver(config.dll);
 rd.Connect();

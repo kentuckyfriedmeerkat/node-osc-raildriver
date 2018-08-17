@@ -99,8 +99,6 @@ let postmap = (c, rval, cval) => {
             packets.push(formPacket(`${c}/dupl/${i}`, formatValue(c, cval, _cmap[c].dupl[i])));
     }
 
-    // Todo: change from _split to /split/ or something similar
-    // Create an output c == i to get around TouchOSC LED limitations
     if (_cmap[c].outsplit) for (let i in _cmap[c].outsplit) {
         let x = _cmap[c].outsplit;
         let val = null;
