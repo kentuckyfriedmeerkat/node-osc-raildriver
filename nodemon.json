@@ -1,5 +1,6 @@
 {
     "watch": [ ".", "maps/" ],
+    "ignore": [ "node_modules/", "public/" ],
     "ext": "js,json,yaml",
     "exec": "node ./index.js"
 }

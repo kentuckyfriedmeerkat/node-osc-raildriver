@@ -1,0 +1,12 @@
+doctype html
+html
+    head
+        link(rel='stylesheet', href='/out/main.css')
+        title Index
+    body
+        .gauge#gauge1(style=`
+            width: 100vw;
+            height: 25vw;
+            top: 20vh;`)
+        script(src='/lib/systemjs/dist/system.js')
+        script SystemJS.import('/pub/main.js')
