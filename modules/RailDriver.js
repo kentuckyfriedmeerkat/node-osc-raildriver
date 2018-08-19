@@ -5,7 +5,7 @@ let logger = new Signale({ scope: 'raildriv' });
 
 module.exports = class RailDriver {
     constructor(dll, intercepts = {}) {
-        logger.start(`Connecting to DLL at ${dll}...`);
+        logger.start(`Loading RailDriver interface...`);
         this._lib = ffi.Library(dll, {
             SetRailSimConnected: ['void', ['bool']],
             SetRailDriverConnected: ['void', ['bool']],
