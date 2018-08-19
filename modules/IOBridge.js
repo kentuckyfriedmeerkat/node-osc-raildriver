@@ -4,9 +4,7 @@ let Signale = require('signale').Signale;
 let Logger = new Signale({
     scope: 'iobridge'
 });
-let RailDriver = require('./RailDriver');
 let Events = require('events');
-let BridgeCommon = require('./BridgeCommon')
 
 const addressPath = new URLPattern('/control/:id(/:command)');
 const suspensionDuration = 75;
@@ -14,14 +12,13 @@ const updateInterval = 20;
 
 module.exports =
 class IOBridge extends Events.EventEmitter {
-    constructor(config, cmap, io) {
+    constructor(config, cmap, rd, io) {
         super();
         this.io = io;
+        this.rd = rd;
         this.cmap = cmap;
         this.suspensions = {};
         this.previousVal = {};
-        this.bc = new BridgeCommon(this.cmap.base);
-        this.rd = new RailDriver(config.dll, cmap.intercepts);
         this.rd.Connect();
         setInterval(this.SendCmapValues.bind(this), updateInterval);
         Logger.success('IOBridge ready');
@@ -42,25 +39,21 @@ class IOBridge extends Events.EventEmitter {
 
     GeneratePackets(trackPrevious = true) {
         let packets = {};
-        for (let cmapItem in this.cmap.base) {
+        for (let cmapItem in this.cmap.intercepts) {
             let suspended = this.suspensions[cmapItem]? true : false;
             if (!this.rd.Controllers[cmapItem]) {
                 delete this.cmap[cmapItem];
                 continue;
             }
             let cval = this.rd.GetControllerValue(cmapItem);
-            // let cval = this.bc.filterValue(cmapItem, rval);
             if (!suspended) {
                 if (!this.previousVal[cmapItem] ||
                     this.previousVal[cmapItem] != cval)
                     this.previousVal[cmapItem] = cval;
                 else if (trackPrevious) continue;
 
-                let packet = this.bc.formPacket(cmapItem, cval);
-                packets[packet.address.replace('/control/', '')] = packet.args[0].value;
+                packets[cmapItem] = cval;
             }
-            // for (let packet of this.bc.postmap(cmapItem, rval, cval))
-            //     packets[packet.address] = packet.args[0].value;
         }
         return packets;
     }

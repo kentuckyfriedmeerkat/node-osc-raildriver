@@ -26,7 +26,7 @@ export class RadialGauge {
             for (let x of this.options.auxiliaries)
                 this.auxiliaries.push(x(this.draw));
         }
-        this.SetNeedle(this.options.minValue);
+        this.SetValue(this.options.minValue);
     }
     DrawNeedle(needleOptions) {
         console.log(`${this.id}: drawing needle`);
@@ -69,7 +69,7 @@ export class RadialGauge {
             .attr({ fill: tickOptions.label.color }).font({ anchor: 'middle' }).rotate(-angle).id(`tickLabel${val}`);
         return gp.rotate(angle, this.options.radius, this.options.radius).id(`tick${val}`);
     }
-    SetNeedle(val, log) {
+    SetValue(val, log) {
         if (log) console.log(`${this.id}: setting needle to ${val}`);
         if (val < this.options.minValue) val = this.options.minValue;
         else if (val > this.options.maxValue) val = this.options.maxValue;

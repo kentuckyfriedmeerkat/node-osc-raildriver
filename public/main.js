@@ -72,6 +72,6 @@ gauges.Speedometer = new RadialGauge('gauge_Speedometer', {
 
 io.on('packets', msg => {
     for (let packet in msg) {
-        if (gauges[packet]) gauges[packet].SetNeedle(msg[packet]);
+        if (gauges[packet]) gauges[packet].SetValue(msg[packet]);
     }
 });

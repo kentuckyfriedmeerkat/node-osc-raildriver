@@ -6,11 +6,9 @@ let Signale = require('signale').Signale;
 let HTTP = require('http');
 let SocketIO = require('socket.io');
 let FS = require('fs');
-let OSCBridge = require('./modules/OSCBridge');
-let IOBridge = require('./modules/IOBridge');
 let Stylus = require('stylus');
-
-const port = 3000;
+let IOBridge = require('./modules/IOBridge');
+let RailDriver = require('./modules/RailDriver');
 
 let Logger = new Signale({
     scope: 'index.js'
@@ -29,6 +27,7 @@ let Cmap = Yaml.safeLoad(FS.readFileSync(cmappath));
 let app = new Express();
 let server = new HTTP.Server(app);
 let io = new SocketIO(server);
+let rd = new RailDriver(Config.dll, Cmap.intercepts);
 
 app.set('view engine', 'pug');
 app.set('views', Path.join(__dirname, 'views'));
@@ -43,7 +42,7 @@ app.use('/css', Express.static(Path.join(__dirname, 'css')));
 app.use('/public', Express.static(Path.join(__dirname, 'public')));
 app.get('/', (req, res) => res.render('index'));
 
-server.listen(port, () => {
-    Logger.start(`Server listening on ${port}`);
-    let bridge = new IOBridge(Config, Cmap, io);
+server.listen(Config.port, () => {
+    Logger.start(`Server listening on ${Config.port}`);
+    let bridge = new IOBridge(Config, Cmap, rd, io);
 });

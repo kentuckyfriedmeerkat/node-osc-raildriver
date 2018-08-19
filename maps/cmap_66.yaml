@@ -10,36 +10,36 @@ intercepts:
   Speedometer: SpeedometerMPH
   PBLBrake: VirtualBrake
   LocoBrake: EngineBrakeControl
-base:
-  RPM:
-    format:
-      mantissa: 0
-  Ammeter:
-    format:
-      mantissa: 0
-  Wipers: {}
-  Wipers2: {}
-  BrakeControl:
-    dupl:
-      - mantissa: 1
-  PassGoods:
-    outsplit: [ 0, 1 ]
-  Power: {}
-  Headlights:
-    outsplit: [ 1, 2, 3 ]
-  EmergencyPlunger: {}
-  BrakeCylinder:
-    dupl:
-      - mantissa: 1
-  Speedometer:
-    dupl:
-      - mantissa: 0
-  AWS: {}
-  Reverser:
-    outsplit: [ -1, 1 ]
-  MasterKey: {}
-  BrakePipe:
-    dupl:
-      - mantissa: 1
-  Taillights: {}
-  ParkingBrakeStatus: {}
+# base:
+#   RPM:
+#     format:
+#       mantissa: 0
+#   Ammeter:
+#     format:
+#       mantissa: 0
+#   Wipers: {}
+#   Wipers2: {}
+#   BrakeControl:
+#     dupl:
+#       - mantissa: 1
+#   PassGoods:
+#     outsplit: [ 0, 1 ]
+#   Power: {}
+#   Headlights:
+#     outsplit: [ 1, 2, 3 ]
+#   EmergencyPlunger: {}
+#   BrakeCylinder:
+#     dupl:
+#       - mantissa: 1
+#   Speedometer:
+#     dupl:
+#       - mantissa: 0
+#   AWS: {}
+#   Reverser:
+#     outsplit: [ -1, 1 ]
+#   MasterKey: {}
+#   BrakePipe:
+#     dupl:
+#       - mantissa: 1
+#   Taillights: {}
+#   ParkingBrakeStatus: {}

@@ -1,10 +1,2 @@
-{
-    "port": {
-        "localAddress": "0.0.0.0",
-        "localPort": 57121,
-        "remoteAddress": "10.0.0.1",
-        "remotePort": 9000,
-        "metadata": true
-    },
-    "dll": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RailWorks\\plugins\\RailDriver.dll"
-}
+port: 8080
+dll: C:\\Program Files(x86)\\Steam\\steamapps\\common\\RailWorks\\plugins\\RailDriver.dll
