@@ -2,8 +2,13 @@ doctype html
 html
     head
         title Index
+        link(rel='stylesheet', href='/css/main.css')
     body
-        h1 Index
+        .gauge#gauge_Speedometer(style=`
+            width: 100vw;
+            height: 25vw;
+            top: 20vh;
+        `)
         script(src='/public/jspm_packages/system.js')
         script(src='/public/config.js')
         script System.import('/public/main.js')

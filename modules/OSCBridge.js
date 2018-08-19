@@ -21,7 +21,6 @@ const addressPath = new URLPattern('/control/:id(/:command)');
 const suspensionDuration = 75;
 const updateInterval = 20;
 
-
 let messageReceived = msg => {
     // Parse the path
     let parsedPath = addressPath.match(msg.address);

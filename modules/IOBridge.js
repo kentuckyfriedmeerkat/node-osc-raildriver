@@ -1,14 +1,12 @@
 let _ = require('lodash');
 let URLPattern = require('url-pattern');
-let Numbro = require('numbro');
 let Signale = require('signale').Signale;
 let Logger = new Signale({
     scope: 'iobridge'
 });
 let RailDriver = require('./RailDriver');
 let Events = require('events');
-let { formatValue, filterValue, formPacket, postmap, closest } =
-    require('./BridgeCommon')
+let BridgeCommon = require('./BridgeCommon')
 
 const addressPath = new URLPattern('/control/:id(/:command)');
 const suspensionDuration = 75;
@@ -22,42 +20,47 @@ class IOBridge extends Events.EventEmitter {
         this.cmap = cmap;
         this.suspensions = {};
         this.previousVal = {};
+        this.bc = new BridgeCommon(this.cmap.base);
         this.rd = new RailDriver(config.dll, cmap.intercepts);
         this.rd.Connect();
         setInterval(this.SendCmapValues.bind(this), updateInterval);
         Logger.success('IOBridge ready');
+        let self = this;
 
         this.io.on('connection', socket => {
             Logger.info('Connection');
+
+            self.on('packets', packets => io.emit('packets', packets));
         });
     }
 
     SendCmapValues() {
-        this.emit('packets', this.GeneratePackets());
+        let generatedPackets = this.GeneratePackets();
+        if (_.keys(generatedPackets).length)
+            this.emit('packets', generatedPackets);
     }
 
     GeneratePackets(trackPrevious = true) {
         let packets = {};
-        for (let cmapItem in this.cmap) {
+        for (let cmapItem in this.cmap.base) {
             let suspended = this.suspensions[cmapItem]? true : false;
             if (!this.rd.Controllers[cmapItem]) {
                 delete this.cmap[cmapItem];
                 continue;
             }
-            let rval = this.rd.GetControllerValue(cmapItem);
-            let cval = filterValue(cmapItem, rval);
+            let cval = this.rd.GetControllerValue(cmapItem);
+            // let cval = this.bc.filterValue(cmapItem, rval);
             if (!suspended) {
                 if (!this.previousVal[cmapItem] ||
                     this.previousVal[cmapItem] != cval)
                     this.previousVal[cmapItem] = cval;
                 else if (trackPrevious) continue;
 
-                // packets.push(formPacket(c, cval));
-                let packet = formPacket(c, cval);
-                packets[packet.address] = packet.args[0].value;
+                let packet = this.bc.formPacket(cmapItem, cval);
+                packets[packet.address.replace('/control/', '')] = packet.args[0].value;
             }
-            for (let packet of postmap(cmapItem, rval, cval))
-                packets[packet.address] = packet.args[0].value;
+            // for (let packet of this.bc.postmap(cmapItem, rval, cval))
+            //     packets[packet.address] = packet.args[0].value;
         }
         return packets;
     }

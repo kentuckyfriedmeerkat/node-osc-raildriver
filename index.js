@@ -8,6 +8,7 @@ let SocketIO = require('socket.io');
 let FS = require('fs');
 let OSCBridge = require('./modules/OSCBridge');
 let IOBridge = require('./modules/IOBridge');
+let Stylus = require('stylus');
 
 const port = 3000;
 
@@ -31,6 +32,14 @@ let io = new SocketIO(server);
 
 app.set('view engine', 'pug');
 app.set('views', Path.join(__dirname, 'views'));
+app.use(Stylus.middleware({
+    src: Path.join(__dirname, 'styl'),
+    dest: Path.join(__dirname, 'css'),
+    compile: (str, path) => Stylus(str)
+        .set('filename', path)
+        .set('compress', true)
+}));
+app.use('/css', Express.static(Path.join(__dirname, 'css')));
 app.use('/public', Express.static(Path.join(__dirname, 'public')));
 app.get('/', (req, res) => res.render('index'));
 

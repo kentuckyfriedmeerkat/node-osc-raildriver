@@ -18,6 +18,7 @@
     "pug": "^2.0.3",
     "signale": "^1.2.1",
     "socket.io": "^2.1.1",
+    "stylus": "^0.54.5",
     "url-pattern": "^1.0.3",
     "vorpal": "^1.12.0",
     "yargs": "^12.0.1"
@@ -27,7 +28,8 @@
       "baseURL": "public"
     },
     "dependencies": {
-      "socket.io-client": "npm:socket.io-client@^2.1.1"
+      "socket.io-client": "npm:socket.io-client@^2.1.1",
+      "svg.js": "npm:svg.js@^2.6.5"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",

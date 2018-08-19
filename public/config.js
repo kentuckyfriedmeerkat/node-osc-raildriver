@@ -18,6 +18,7 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "core-js": "npm:core-js@1.2.7",
     "socket.io-client": "npm:socket.io-client@2.1.1",
+    "svg.js": "npm:svg.js@2.6.5",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
     },
@@ -135,6 +136,11 @@ System.config({
       "component-emitter": "npm:component-emitter@1.2.1",
       "debug": "npm:debug@3.1.0",
       "isarray": "npm:isarray@2.0.1"
+    },
+    "npm:svg.js@2.6.5": {
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.2"
     },
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",
