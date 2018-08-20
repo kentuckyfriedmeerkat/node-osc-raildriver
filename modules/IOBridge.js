@@ -28,6 +28,9 @@ class IOBridge extends Events.EventEmitter {
             Logger.info('Connection');
 
             self.on('packets', packets => io.emit('packets', packets));
+            socket.on('webcontrols', () => {
+                io.emit('webcontrols', this.cmap.webcontrols);
+            });
         });
     }
 

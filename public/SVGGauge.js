@@ -9,6 +9,7 @@ let defaultOptions = {
     background: {
         color: '#000000'
     },
+    plains: [],
     centre: {
         color: '#ffffff',
         radius: 0.08
@@ -60,10 +61,20 @@ export class RadialGauge {
         this.centre = this.DrawCentre(this.options.centre);
         for (let x of this.options.ticks)
             this.ticks = this.DrawTicks(x.values, x.style);
-        this.auxiliaries = [];
-        for (let x of this.options.auxiliaries)
-            this.auxiliaries.push(x(this.draw));
+        if (this.options.auxiliaries) {
+            this.auxiliaries = [];
+            for (let x of this.options.auxiliaries)
+                this.auxiliaries.push(x(this.draw));
+        }
+        this.plains = this.DrawPlains(this.options.plainLabels);
         this.SetValue(this.options.minValue);
+    }
+    DrawPlains(plains) {
+        let rv = [];
+        for (let plain of plains)
+            rv.push(this.draw.plain(plain.text).fill(plain.fill || '#000000')
+                .font(plain.font || {}).attr(plain.attr || {}));
+        return rv;
     }
     DrawNeedle(needleOptions) {
         console.log(`${this.id}: drawing needle`);

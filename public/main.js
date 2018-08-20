@@ -4,73 +4,38 @@ import { RadialGauge } from './SVGGauge.js';
 let io = new SocketIOClient();
 
 const radius = 200;
-
-let gauges = {
-    Speedometer: new RadialGauge('gauge_Speedometer', {
-        radius,
-        minValue: 0,
-        maxValue: 100,
-        auxiliaries: [
-            $ => $.plain('mile/h').fill('#ffffff')
-                .font({ anchor: 'middle' })
-                .attr({ x: radius, y: radius * 1.5 })
-        ],
-        background: {
-            color: '#222222'
-        },
-        centre: {
-            color: '#000000',
-            radius: 0.08
-        },
-        needle: {
-            outer: 0.25,
-            inner: 0.15,
-            stroke: {
-                width: 3,
-                color: '#aa3311'
-            }
-        },
-        ticks: [{
-            values: [ 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ],
-            style: {
-                outer: 0,
-                inner: 0.08,
-                stroke: {
-                    width: 4,
-                    color: '#ffffff',
-                },
-                enableLabel: true,
-                label: {
-                    inner: 0.19,
-                    color: '#ffffff'
-                }
-            }
-        }, {
-            values: [ 5, 15, 25, 35, 45, 55, 65, 85, 95 ],
-            style: {
-                outer: 0,
-                inner: 0.05,
-                stroke: {
-                    width: 2,
-                    color: '#6a6a6a',
-                }
-            }
-        }, {
-            values: [ 75 ],
-            style: {
-                outer: 0,
-                inner: 0.05,
-                stroke: {
-                    width: 4,
-                    color: '#aa3311',
-                }
-            }
-        }]
-    })
-};
+let gauges = {};
 
 io.on('packets', msg => {
     for (let packet in msg) {
         if (gauges[packet]) gauges[packet].SetValue(msg[packet]);
     }
 });
+
+let controls_received = false;
+
+io.on('webcontrols', webcontrols => {
+    if (controls_received) return;
+    for (let wcid in webcontrols) {
+        let wcobj = webcontrols[wcid];
+        let elem = document.getElementById(`gauge_${wcid}`);
+        if (!elem) {
+            elem = document.createElement('div');
+            elem.id = `gauge_${wcid}`;
+            elem.classList = 'gauge';
+            Object.assign(elem.style, wcobj.style || {});
+            document.body.appendChild(elem);
+        }
+        switch (wcobj.type) {
+            case 'RadialGauge':
+                gauges[wcid] = new RadialGauge(`gauge_${wcid}`, wcobj.options);
+                break;
+            default:
+                continue;
+        }
+    }
+    document.getElementById('loading').remove();
+    controls_received = true;
+});
+
+io.emit('webcontrols');
