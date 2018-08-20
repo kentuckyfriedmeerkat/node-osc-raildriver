@@ -105,6 +105,7 @@ export default class RadialGauge {
         return rv;
     }
     DrawTick(val, tickOptions, log) {
+        if (val < this.options.minValue || val > this.options.maxValue) return;
         if (SVG.get(`${this.id}_tick${val}`)) throw new Error(`${this.id}: there are multiple ticks with value ${val}`);
         if (log) console.log(`${this.id}: drawing tick at ${val}`);
         let gp = this.draw.group();

@@ -30,6 +30,7 @@ class IOBridge extends Events.EventEmitter {
 
             socket.on('webcontrols', () => {
                 io.emit('webcontrols', this.cmap.webcontrols);
+                this.emit('packets', this.GeneratePackets(false));
             });
         });
     }

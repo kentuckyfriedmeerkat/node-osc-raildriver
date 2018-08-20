@@ -12,12 +12,60 @@ intercepts:
   LocoBrake: EngineBrakeControl
 
 webcontrols:
-  Speedometer:
+  BrakeControl:
     type: RadialGauge
     style:
       width: 100vw
-      height: 25vw
+      height: 20vw
       top: 20vh
+    options:
+      radius: 200
+      minValue: 0
+      maxValue: 6
+      minAngle: 120
+      totalAngle: 300
+      background:
+        color: '#222222'
+      centre:
+        color: '#000000'
+        radius: 0.08
+      ticks:
+        - values: [ 0 ]
+          style:
+            enableLabel: true
+            label:
+              inner: 0.12
+              color: '#ffffff'
+        - values: [ 3, 4, 6 ]
+          style:
+            outer: 0.2
+            inner: 0.5
+            stroke:
+              width: 3
+              color: '#ffffff'
+            enableLabel: true
+            label:
+              inner: 0.12
+              color: '#ffffff'
+        - values: [ 5 ]
+          style:
+            outer: 0.2
+            inner: 0.5
+            stroke:
+              width: 3
+              color: '#aa3311'
+            enableLabel: true
+            label:
+              inner: 0.12
+              color: '#ffffff'
+      
+  Speedometer:
+    type: RadialGauge
+    style:
+      left: 40vw
+      width: 60vw
+      height: 15vw
+      top: 25vh
     options:
       radius: 200
       minValue: 0
@@ -32,12 +80,6 @@ webcontrols:
       centre:
         color: '#000000'
         radius: 0.08
-      needle:
-        outer: 0.25
-        inner: 0.15
-        stroke:
-          width: 3
-          color: '#aa3311'
       ticks:
         - values: [ 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ]
           style:
