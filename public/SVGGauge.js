@@ -1,6 +1,6 @@
 import SVG from 'svg.js';
 
-let defautlOptions = {
+let defaultOptions = {
     radius: 100,
     minValue: 0,
     maxValue: 100,
@@ -47,7 +47,7 @@ export class RadialGauge {
 
         // Setup options
         this.id = id;
-        this.options = Object.assign({}, defautlOptions, options);
+        this.options = Object.assign({}, defaultOptions, options);
         for (let a of ['radius', 'minValue', 'maxValue'])
             if (this.options[a] === undefined) throw new Error(`${this.id} options object does not specify ${a}`);
 
