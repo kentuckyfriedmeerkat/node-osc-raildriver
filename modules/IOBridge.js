@@ -22,12 +22,12 @@ class IOBridge extends Events.EventEmitter {
         this.rd.Connect();
         setInterval(this.SendCmapValues.bind(this), updateInterval);
         Logger.success('IOBridge ready');
-        let self = this;
+
+        this.on('packets', packets => io.emit('packets', packets));
 
         this.io.on('connection', socket => {
             Logger.info('Connection');
 
-            self.on('packets', packets => io.emit('packets', packets));
             socket.on('webcontrols', () => {
                 io.emit('webcontrols', this.cmap.webcontrols);
             });

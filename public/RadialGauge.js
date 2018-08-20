@@ -40,7 +40,7 @@ let defaultOptions = {
     }]
 };
 
-export class RadialGauge {
+export default class RadialGauge {
     constructor(id, options) {
         // Functions
         this.calculatePercentage = (val, min, max) => (val - min) / (max - min);
@@ -70,6 +70,7 @@ export class RadialGauge {
         this.SetValue(this.options.minValue);
     }
     DrawPlains(plains) {
+        console.log(`${this.id}: drawing plain labels`);
         let rv = [];
         for (let plain of plains)
             rv.push(this.draw.plain(plain.text).fill(plain.fill || '#000000')
@@ -83,27 +84,28 @@ export class RadialGauge {
             this.options.radius + this.options.radius * (needleOptions.inner || 0), // y1
             this.options.radius, // x2
             this.options.radius * (needleOptions.outer || 0) // y2
-        ).stroke(needleOptions.stroke).id('needle');
+        ).stroke(needleOptions.stroke).id(`${this.id}_needle`);
     }
     DrawBackground(bgOptions) {
         console.log(`${this.id}: drawing background`);
         return this.draw.circle(this.options.radius * 2)
-            .attr({ fill: bgOptions.color }).id('background');
+            .attr({ fill: bgOptions.color }).id(`${this.id}_background`);
     }
     DrawCentre(centreOptions) {
         console.log(`${this.id}: drawing centre`);
         return this.draw.circle(this.options.radius * centreOptions.radius * 2)
             .attr({ fill: centreOptions.color, cx: this.options.radius, cy: this.options.radius })
-            .id('centre');
+            .id(`${this.id}_centre`);
     }
     DrawTicks(tickList, ticksOptions) {
+        console.log(`${this.id}: drawing ticks`);
         let rv = [];
         for (let tick of tickList)
             rv.push(this.DrawTick(tick, ticksOptions));
         return rv;
     }
     DrawTick(val, tickOptions, log) {
-        if (SVG.get(`tick${val}`)) throw new Error(`${this.id}: there are multiple ticks with value ${val}`);
+        if (SVG.get(`${this.id}_tick${val}`)) throw new Error(`${this.id}: there are multiple ticks with value ${val}`);
         if (log) console.log(`${this.id}: drawing tick at ${val}`);
         let gp = this.draw.group();
         let angle = this.calculateAngle(val, this.options.minValue, this.options.maxValue);
@@ -115,7 +117,7 @@ export class RadialGauge {
         ).stroke(tickOptions.stroke) .id(`tickLine${val}`);
         if (tickOptions.enableLabel) gp.plain(val).attr({ x: this.options.radius, y: this.options.radius * tickOptions.label.inner })
             .attr({ fill: tickOptions.label.color }).font({ anchor: 'middle' }).rotate(-angle).id(`tickLabel${val}`);
-        return gp.rotate(angle, this.options.radius, this.options.radius).id(`tick${val}`);
+        return gp.rotate(angle, this.options.radius, this.options.radius).id(`${this.id}_tick${val}`);
     }
     SetValue(val, log) {
         if (log) console.log(`${this.id}: setting needle to ${val}`);
