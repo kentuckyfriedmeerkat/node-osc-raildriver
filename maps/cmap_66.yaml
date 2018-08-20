@@ -17,7 +17,7 @@ webcontrols:
     style:
       width: 100vw
       height: 20vw
-      top: 20vh
+      top: 10vw
     options:
       radius: 200
       valueTable:
@@ -82,7 +82,7 @@ webcontrols:
     style:
       width: 100vw
       height: 15vw
-      top: 27.5vh
+      top: 12.5vw
     options:
       radius: 150
       centre:
@@ -112,7 +112,7 @@ webcontrols:
       left: 40vw
       width: 60vw
       height: 15vw
-      top: 27.5vh
+      top: 12.5vw
     options:
       radius: 150
       valueTable:
