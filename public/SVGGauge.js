@@ -1,5 +1,44 @@
 import SVG from 'svg.js';
 
+let defautlOptions = {
+    radius: 100,
+    minValue: 0,
+    maxValue: 100,
+    minAngle: 225,
+    totalAngle: 270,
+    background: {
+        color: '#000000'
+    },
+    centre: {
+        color: '#ffffff',
+        radius: 0.08
+    },
+    needle: {
+        outer: 0.25,
+        inner: 0.15,
+        stroke: {
+            width: 3,
+            color: '#aa3311'
+        }
+    },
+    ticks: [{
+        values: [ 0, 10, 20, 30, 40, 50, 70, 60, 80, 90, 100 ],
+        style: {
+            outer: 0,
+            inner: 0.08,
+            stroke: {
+                width: 4,
+                color: '#ffffff',
+            },
+            enableLabel: true,
+            label: {
+                inner: 0.19,
+                color: '#ffffff'
+            }
+        }
+    }]
+};
+
 export class RadialGauge {
     constructor(id, options) {
         // Functions
@@ -8,7 +47,7 @@ export class RadialGauge {
 
         // Setup options
         this.id = id;
-        this.options = options;
+        this.options = Object.assign({}, defautlOptions, options);
         for (let a of ['radius', 'minValue', 'maxValue'])
             if (this.options[a] === undefined) throw new Error(`${this.id} options object does not specify ${a}`);
 
@@ -16,16 +55,14 @@ export class RadialGauge {
         console.log(`${this.id}: setup`);
         this.draw = SVG(this.id).viewbox(0, 0, this.options.radius * 2, this.options.radius * 2);
 
-        if (this.options.background) this.gaugeBg = this.DrawBackground(this.options.background);
+        this.gaugeBg = this.DrawBackground(this.options.background);
         this.needle = this.DrawNeedle(this.options.needle);
-        if (this.options.centre) this.centre = this.DrawCentre(this.options.centre);
-        if (this.options.ticks) for (let x of this.options.ticks)
+        this.centre = this.DrawCentre(this.options.centre);
+        for (let x of this.options.ticks)
             this.ticks = this.DrawTicks(x.values, x.style);
-        if (this.options.auxiliaries) {
-            this.auxiliaries = [];
-            for (let x of this.options.auxiliaries)
-                this.auxiliaries.push(x(this.draw));
-        }
+        this.auxiliaries = [];
+        for (let x of this.options.auxiliaries)
+            this.auxiliaries.push(x(this.draw));
         this.SetValue(this.options.minValue);
     }
     DrawNeedle(needleOptions) {
@@ -65,7 +102,7 @@ export class RadialGauge {
             this.options.radius, // x2
             this.options.radius * tickOptions.inner // y2
         ).stroke(tickOptions.stroke) .id(`tickLine${val}`);
-        if (tickOptions.label) gp.plain(val).attr({ x: this.options.radius, y: this.options.radius * tickOptions.label.inner })
+        if (tickOptions.enableLabel) gp.plain(val).attr({ x: this.options.radius, y: this.options.radius * tickOptions.label.inner })
             .attr({ fill: tickOptions.label.color }).font({ anchor: 'middle' }).rotate(-angle).id(`tickLabel${val}`);
         return gp.rotate(angle, this.options.radius, this.options.radius).id(`tick${val}`);
     }
