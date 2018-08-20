@@ -9,7 +9,7 @@ let defaultOptions = {
     background: {
         color: '#000000'
     },
-    plains: [],
+    plainLabels: [],
     centre: {
         color: '#ffffff',
         radius: 0.08
