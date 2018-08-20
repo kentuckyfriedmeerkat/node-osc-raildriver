@@ -24,6 +24,8 @@
       "baseURL": "public"
     },
     "dependencies": {
+      "everpolate": "npm:everpolate@^0.0.3",
+      "lodash": "npm:lodash@^4.17.10",
       "socket.io-client": "npm:socket.io-client@^2.1.1",
       "svg.js": "npm:svg.js@^2.6.5"
     },

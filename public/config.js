@@ -17,6 +17,8 @@ System.config({
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "core-js": "npm:core-js@1.2.7",
+    "everpolate": "npm:everpolate@0.0.3",
+    "lodash": "npm:lodash@4.17.10",
     "socket.io-client": "npm:socket.io-client@2.1.1",
     "svg.js": "npm:svg.js@2.6.5",
     "github:jspm/nodelibs-assert@0.1.0": {

@@ -9,6 +9,14 @@ let FS = require('fs');
 let Stylus = require('stylus');
 let IOBridge = require('./modules/IOBridge');
 let RailDriver = require('./modules/RailDriver');
+let _ = require('lodash');
+
+let yamlSchema = Yaml.Schema.create([
+    new Yaml.Type('!range', {
+        kind: 'sequence',
+        construct: data => _.range(data[0], data[1], data[2])
+    })
+]);
 
 let Logger = new Signale({
     scope: 'index.js'
@@ -19,7 +27,7 @@ if (!argv.cmap)
 
 let Config = Yaml.safeLoad(FS.readFileSync('config.yaml'));
 let cmappath = argv.cmap;
-let Cmap = Yaml.safeLoad(FS.readFileSync(cmappath));
+let Cmap = Yaml.safeLoad(FS.readFileSync(cmappath), { schema: yamlSchema });
 
 // let osc = new OSCBridge(Config, Cmap);
 // osc.Open();

@@ -20,21 +20,32 @@ webcontrols:
       top: 20vh
     options:
       radius: 200
-      minValue: 0
-      maxValue: 6
-      minAngle: 120
-      totalAngle: 300
+      valueTable:
+        0: -240
+        3: -120
+        6: 60
       background:
         color: '#222222'
-      centre:
-        color: '#000000'
-        radius: 0.08
+      centre: !!null
+      needle:
+        outer: 0
+        inner: 1
+        stroke:
+          width: 3
+          color: '#ffffff'
       ticks:
+        - values: !range [ 3, 6, 0.1 ]
+          style:
+            outer: 0.2
+            inner: 0.23
+            stroke:
+              width: 1
+              color: '#555555'
         - values: [ 0 ]
           style:
             enableLabel: true
             label:
-              inner: 0.12
+              inner: 0.08
               color: '#ffffff'
         - values: [ 3, 4, 6 ]
           style:
@@ -45,8 +56,15 @@ webcontrols:
               color: '#ffffff'
             enableLabel: true
             label:
-              inner: 0.12
+              inner: 0.08
               color: '#ffffff'
+        - values: !range [ 3.5, 5.5, 1 ]
+          style:
+            outer: 0.2
+            inner: 0.26
+            stroke:
+              width: 2
+              color: '#9a9a9a'
         - values: [ 5 ]
           style:
             outer: 0.2
@@ -58,6 +76,35 @@ webcontrols:
             label:
               inner: 0.12
               color: '#ffffff'
+
+  BrakePipe:
+    type: RadialGauge
+    style:
+      width: 100vw
+      height: 15vw
+      top: 27.5vh
+    options:
+      radius: 150
+      centre:
+        color: '#000000'
+        radius: 0.15
+      plainLabels:
+        - text: bar
+          fill: '#ffffff'
+          font: { anchor: middle }
+          attr: { x: 150, y: 250 }
+      valueTable:
+        0: -240
+        3: -120
+        6: 60
+      background:
+        color: '#111111'
+      needle:
+        outer: 0
+        inner: 1
+        stroke:
+          width: 3
+          color: '#ffffff'
       
   Speedometer:
     type: RadialGauge
@@ -65,23 +112,24 @@ webcontrols:
       left: 40vw
       width: 60vw
       height: 15vw
-      top: 25vh
+      top: 27.5vh
     options:
-      radius: 200
-      minValue: 0
-      maxValue: 100
+      radius: 150
+      valueTable:
+        0: -135
+        100: 135
       plainLabels:
         - text: mile/h
           fill: '#ffffff'
           font: { anchor: middle }
-          attr: { x: 200, y: 300 }
+          attr: { x: 150, y: 225 }
       background:
         color: '#222222'
       centre:
         color: '#000000'
-        radius: 0.08
+        radius: 0.15
       ticks:
-        - values: [ 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ]
+        - values: !range [ 0, 100, 10 ]
           style:
             outer: 0
             inner: 0.08
@@ -90,9 +138,9 @@ webcontrols:
               color: '#ffffff'
             enableLabel: true
             label:
-              inner: 0.19
+              inner: 0.21
               color: '#ffffff'
-        - values: [ 5, 15, 25, 35, 45, 55, 65, 85, 95 ]
+        - values: !range [ 5, 95, 10 ]
           style:
             outer: 0
             inner: 0.05
