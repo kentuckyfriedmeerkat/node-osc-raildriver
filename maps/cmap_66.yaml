@@ -12,24 +12,25 @@ intercepts:
   LocoBrake: EngineBrakeControl
 
 webcontrols:
-  - control: MasterKey
-    type: LEDGauge
-    style:
-      width: 10vw
-      height: 10vw
-      top: 80vh
-    options:
-      radius: 20
-      valueTable:
-        0: [ 50, 50, 50 ]
-        1: [ 255, 255, 0 ]
+  # - control: MasterKey
+  #   type: LEDGauge
+  #   style:
+  #     width: 10vw
+  #     height: 10vw
+  #     top: 80vh
+  #   options:
+  #     radius: 20
+  #     valueTable:
+  #       0: [ 50, 50, 50 ]
+  #       1: [ 255, 255, 0 ]
 
   - control: BrakeControl
     type: RadialGauge
-    style:
-      width: 100vw
-      height: 20vw
-      top: 10vw
+    attr:
+      width: 200
+      height: 200
+      x: 600
+      y: 200
     options:
       radius: 200
       valueTable:
@@ -37,7 +38,7 @@ webcontrols:
         3: -120
         6: 60
       background:
-        color: '#222222'
+        fill: '#222222'
       centre: !!null
       needle:
         outer: 0
@@ -91,10 +92,11 @@ webcontrols:
 
   - control: BrakePipe
     type: RadialGauge
-    style:
-      width: 100vw
-      height: 15vw
-      top: 12.5vw
+    attr:
+      width: 150
+      height: 150
+      x: 650
+      y: 250
     options:
       radius: 150
       centre:
@@ -110,7 +112,7 @@ webcontrols:
         3: -120
         6: 60
       background:
-        color: '#111111'
+        fill: '#111111'
       needle:
         outer: 0
         inner: 1
@@ -120,11 +122,11 @@ webcontrols:
       
   - control: Speedometer
     type: RadialGauge
-    style:
-      left: 40vw
-      width: 60vw
-      height: 15vw
-      top: 12.5vw
+    attr:
+      width: 150
+      height: 150
+      x: 1025
+      y: 250
     options:
       radius: 150
       valueTable:
@@ -136,7 +138,7 @@ webcontrols:
           font: { anchor: middle }
           attr: { x: 150, y: 225 }
       background:
-        color: '#222222'
+        fill: '#222222'
       centre:
         color: '#000000'
         radius: 0.15
