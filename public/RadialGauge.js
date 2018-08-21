@@ -44,23 +44,23 @@ let defaultOptions = {
 };
 
 export default class RadialGauge {
-    constructor(id, options) {
+    constructor(elem, options) {
         // Functions
         this.calculateAngleTable = (val, table) => Everpolate.linear(val, _.keys(table), _.values(table));
 
         // Setup options
-        this.id = id;
+        this.elem = elem;
         this.options = _.assign({}, defaultOptions, options);
 
         // Put svg on page
-        console.log(`${this.id}: setup`);
-        this.draw = SVG(this.id).viewbox(0, 0, this.options.radius * 2, this.options.radius * 2);
+        console.log(`${this.elem}: setup`);
+        this.draw = SVG(this.elem).viewbox(0, 0, this.options.radius * 2, this.options.radius * 2);
 
         this.gaugeBg = this.DrawBackground(this.options.background);
-        this.needle = this.DrawNeedle(this.options.needle);
-        if (this.options.centre) this.centre = this.DrawCentre(this.options.centre);
         if (this.options.ticks) for (let x of this.options.ticks)
             this.ticks = this.DrawTicks(x.values, x.style);
+        this.needle = this.DrawNeedle(this.options.needle);
+        if (this.options.centre) this.centre = this.DrawCentre(this.options.centre);
         if (this.options.auxiliaries) {
             this.auxiliaries = [];
             for (let x of this.options.auxiliaries)
@@ -70,7 +70,7 @@ export default class RadialGauge {
         this.SetValue(_.keys(this.options.valueTable)[0]);
     }
     DrawPlains(plains) {
-        console.log(`${this.id}: drawing plain labels`);
+        console.log(`${this.elem}: drawing plain labels`);
         let rv = [];
         for (let plain of plains)
             rv.push(this.draw.plain(plain.text).fill(plain.fill || '#000000')
@@ -78,34 +78,34 @@ export default class RadialGauge {
         return rv;
     }
     DrawNeedle(needleOptions) {
-        console.log(`${this.id}: drawing needle`);
+        console.log(`${this.elem}: drawing needle`);
         return this.draw.line(
             this.options.radius, // x1
             this.options.radius * (needleOptions.inner || 0), // y1
             this.options.radius, // x2
             this.options.radius * (needleOptions.outer || 0) // y2
-        ).stroke(needleOptions.stroke).id(`${this.id}_needle`);
+        ).stroke(needleOptions.stroke).id(`${this.elem}_needle`);
     }
     DrawBackground(bgOptions) {
-        console.log(`${this.id}: drawing background`);
+        console.log(`${this.elem}: drawing background`);
         return this.draw.circle(this.options.radius * 2)
-            .attr({ fill: bgOptions.color }).id(`${this.id}_background`);
+            .attr({ fill: bgOptions.color }).id(`${this.elem}_background`);
     }
     DrawCentre(centreOptions) {
-        console.log(`${this.id}: drawing centre`);
+        console.log(`${this.elem}: drawing centre`);
         return this.draw.circle(this.options.radius * centreOptions.radius * 2)
             .attr({ fill: centreOptions.color, cx: this.options.radius, cy: this.options.radius })
-            .id(`${this.id}_centre`);
+            .id(`${this.elem}_centre`);
     }
     DrawTicks(tickList, ticksOptions) {
-        console.log(`${this.id}: drawing ticks`);
+        console.log(`${this.elem}: drawing ticks`);
         let rv = [];
         for (let tick of tickList)
             rv.push(this.DrawTick(tick, ticksOptions));
         return rv;
     }
     DrawTick(val, tickOptions, log) {
-        if (log) console.log(`${this.id}: drawing tick at ${val}`);
+        if (log) console.log(`${this.elem}: drawing tick at ${val}`);
         let gp = this.draw.group();
         let angle = this.calculateAngleTable(val, this.options.valueTable);
         gp.line(
@@ -119,7 +119,7 @@ export default class RadialGauge {
         return gp.rotate(angle, this.options.radius, this.options.radius); //.id(`${this.id}_tick${val}`);
     }
     SetValue(val, log) {
-        if (log) console.log(`${this.id}: setting needle to ${val}`);
+        if (log) console.log(`${this.elem}: setting needle to ${val}`);
         this.needle.rotate(this.calculateAngleTable(val, this.options.valueTable), this.options.radius, this.options.radius);
     }
 }

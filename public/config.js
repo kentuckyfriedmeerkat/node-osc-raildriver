@@ -18,6 +18,7 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "core-js": "npm:core-js@1.2.7",
     "everpolate": "npm:everpolate@0.0.3",
+    "jquery": "npm:jquery@3.3.1",
     "lodash": "npm:lodash@4.17.10",
     "socket.io-client": "npm:socket.io-client@2.1.1",
     "svg.js": "npm:svg.js@2.6.5",
