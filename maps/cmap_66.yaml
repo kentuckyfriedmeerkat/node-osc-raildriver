@@ -42,9 +42,9 @@ webcontrols:
       centre: !!null
       needle:
         outer: 0
-        inner: 1
+        inner: 0.16
         stroke:
-          width: 3
+          width: 4
           color: '#ffffff'
       ticks:
         - values: !range [ 3, 6, 0.1 ]
