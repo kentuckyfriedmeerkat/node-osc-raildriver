@@ -14,7 +14,7 @@ let _ = require('lodash');
 let yamlSchema = Yaml.Schema.create([
     new Yaml.Type('!range', {
         kind: 'sequence',
-        construct: data => _.range(data[0], data[1], data[2])
+        construct: data => _.range(data[0], data[1] + data[2], data[2])
     })
 ]);
 
