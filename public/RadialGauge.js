@@ -110,6 +110,7 @@ export default class RadialGauge {
         return gp.rotate(angle, this.options.radius, this.options.radius);
     }
     SetValue(val, log) {
+        if (log) console.log(val);
         this.needle.rotate(this.calculateAngleTable(val, this.options.valueTable), this.options.radius, this.options.radius);
     }
 }

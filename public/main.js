@@ -31,9 +31,10 @@ let drawGrid = () => {
 
 io.on('packets', msg => {
     for (let packet in msg) {
-        _(gauges)
+        _.chain(gauges)
         .filter(o => o.wcid === packet)
-        .each(o => o.SetValue(msg[packet]));
+        .each(o => o.gauge.SetValue(msg[packet]))
+        .commit();
     }
 });
 
@@ -41,6 +42,7 @@ let controls_received = false;
 
 io.on('webcontrols', webcontrols => {
     if (controls_received) return;
+    console.log('Receiving controls...');
     for (let wcobj of webcontrols) {
         let wcid = wcobj.control;
         console.log(`Drawing ${wcid}...`);
